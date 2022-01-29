@@ -3,8 +3,9 @@
 :: Routine of superman.bat
 :: a batch file to create an Administrator called superman with a password clarkent
 :: by <https://github.com/GrantAccess/Clark-Kent/> (CC)
-:: the author has not changed this document since Saturday 22 Jan 2022
+:: the author has not changed this document since Saturday 29 Jan 2022
 
+:: The built-in 'Administrator' account is usually not active. May not require a password.
 :: turn default Administrator account on/off
 :: net user Administrator /active:yes
 :: net user Administrator /active:no
