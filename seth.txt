@@ -1,0 +1,48 @@
+sethc.exe and Getting a SYSTEM Level Prompt Outside of Login
+Tags: Windows 
+Post by: OmnipotentEntity 
+Posted on: 10 Cado 8:0 - 10.74.40 
+
+sethc.exe is a program that controls some of your accessibility options. By defaultin Windows there are several ways to launch it. Left Alt+Left Shift+Print Screen ismy favorite way to launch it. (TRY IT)
+Now something you may notice, in order for disabled people to be able to log in,they need to be able to use this key shortcut to read the login prompt. When donefrom the login window, winlogon.exe launches sethc.exe which does its stuff.
+So, what does this mean? Well, winlogon.exe just launches whatever is named sethc.exe,it doesn't care what executable it *actually* is, so we can just replace sethc.exewith cmd.exe and that will do the trick. But this has a downside. We are corruptingour installation of Windows, and if Windows notices that sethc.exe isn't reallysethc.exe then the jig is up! We need a better way.
+_Enter our better way._
+Windows has a key in the registry called Image File Execution Options. This keydoes... stuff. One of the many things it does is allows for a per executable specificdebugger. The thing is, it doesn't actually check if the executable is actually adebugger, it just launches it instead. Malware use this key as one of the ways tolaunch themselves. We're going to use it for a different purpose.
+Using regedit, Create a key underHKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options.Name it sethc.exe. Under sethc.exe make a new REG_SZ (string) value, name it Debugger.Edit the value to be "C:\windows\system32\cmd.exe"Log out, 
+Left Alt + Left Shift + Print Screen 
+???? 
+Profit!
+Now, one word to the wise, after a set amount of time, that command prompt willautomatically close, it will be killed by winlogon.exe. You can avoid that by suspendingthe winlogon.exe process, but that's typically a bad idea. Just know what you want to dousing your cmd prompt. And do it quickly is best. :)
+This is useful is you cannot log in to your computer, and you want to fix it.
+<ftp://ftp.mirrorservice.org/sites/downloads.sourceforge.net/j/jf/jfm/jfm/JFM 0.5/jfm.jar>
+<ftp://212.219.56.184/sites/downloads.sourceforge.net/j/jf/jfm/jfm/JFM 0.5/jfm.jar>
+212.219.56.184
+<ftp://173.167.53.206/pool1/storage/> 
+<https://youtu.be/SAS3IlUupqk>
+Target files;
+sticky keys ~ sethc.exe
+onscreen keyboard ~ osk.exe
+Utility Manager ~ Utilman.exe
+---
+dos commands
+lookout for monitor tasks
+tasklist
+taskkill /IM task.nam
+NET [ ACCOUNTS | COMPUTER | CONFIG | CONTINUE | FILE | GROUP | HELP |
+      HELPMSG | LOCALGROUP | NAME | PAUSE | PRINT | SEND | SESSION |
+      SHARE | START | STATISTICS | STOP | TIME | USE | USER | VIEW ]
+NET command /HELP
+   Commands available are:
+   NET ACCOUNTS             NET HELP              NET SHARE
+   NET COMPUTER             NET HELPMSG           NET START
+   NET CONFIG               NET LOCALGROUP        NET STATISTICS
+   NET CONFIG SERVER        NET NAME              NET STOP
+   NET CONFIG WORKSTATION   NET PAUSE             NET TIME
+   NET CONTINUE             NET PRINT             NET USE
+   NET FILE                 NET SEND              NET USER
+   NET GROUP                NET SESSION           NET VIEW
+   NET HELP SERVICES lists some of the services you can start.
+   NET HELP SYNTAX explains how to read NET HELP syntax lines.
+   NET HELP command | MORE displays Help one screen at a time.
+Fix my changes
+Windows file protection ~ sfc /scannow
